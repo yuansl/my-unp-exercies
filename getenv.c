@@ -26,11 +26,14 @@ char *getenv2(const char *name)
 	size_t len;
 	int i;
 	char *envbuf;
-	
+
+	/* Thread-once function. it should be called only once in a process
+	 * for a specified key */
 	pthread_once(&key, init_fun);
 	pthread_mutex_lock(&env_mutex);	
 	envbuf = pthread_getspecific(key);
 	if (envbuf == NULL) {
+		/* malloc is __never__ a reentrant function, so just lock it */
 		envbuf = malloc(MAXSTRINGSZ);
 		if (envbuf == NULL) {
 			pthread_mutex_unlock(&env_mutex);
@@ -40,7 +43,7 @@ char *getenv2(const char *name)
 	}
 	len = strlen(name);
 	for (i = 0; environ[i]; i++) {
-		if (strncmp(environ[i], name, len)== 0 &&
+		if (strncmp(environ[i], name, len) == 0 &&
 			environ[i][len] == '=') {
 			strncpy(envbuf, environ[i] + len + 1, MAXSTRINGSZ - 1);
 			pthread_mutex_unlock(&env_mutex);
@@ -55,7 +58,7 @@ int main(void)
 {
 	char *enval;
 
-	enval = getenv2("fuse");
+	enval = getenv2("PWD");
 	if (enval)
 		fputs(enval, stdout);
 	else
