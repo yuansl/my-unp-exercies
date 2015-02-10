@@ -33,7 +33,7 @@ char *getenv2(const char *name)
 	pthread_mutex_lock(&env_mutex);	
 	envbuf = pthread_getspecific(key);
 	if (envbuf == NULL) {
-		/* malloc is __never__ a reentrant function, so just lock it */
+		/* malloc() is __never__ a reentrant function, so just lock it */
 		envbuf = malloc(MAXSTRINGSZ);
 		if (envbuf == NULL) {
 			pthread_mutex_unlock(&env_mutex);

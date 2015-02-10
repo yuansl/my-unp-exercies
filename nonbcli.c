@@ -62,10 +62,10 @@ static void str_cli(int sockfd)
 	toiptr = tooptr = to;
 	friptr = froptr = from;
 	stdineof = false;
-	maxfdp1 = max(max(STDIN_FILENO, STDOUT_FILENO), sockfd) + 1;
 	FD_ZERO(&rset);
 	FD_ZERO(&wset);
-	/* Note: STDOUT_FILENO and any successful socket is ready 
+	maxfdp1 = max(max(STDIN_FILENO, STDOUT_FILENO), sockfd) + 1;	
+	/* Note: STDOUT_FILENO and any successful sockets are ready 
 	 * for write */
 	for (;;) {
 		if (!stdineof && toiptr < &to[BUFSIZ])
