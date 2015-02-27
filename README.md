@@ -1,7 +1,7 @@
 # my-unp-exercies 
 
 
-"unix网络编程 vol-1" 中一些知识点已经过时, 所以在此做记录.
+"unix网络编程 vol-1" 中一些知识点已经过时(在当前的linux-kernal-3.2及之后的版本中), 所以在此做记录.
 
 1). accept不会再因为信号中断
 
