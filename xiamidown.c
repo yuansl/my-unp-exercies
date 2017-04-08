@@ -401,8 +401,9 @@ void http_get(http_t *conn, char *lurl)
 			       conn->proto == PROTO_HTTP ? "http" : "ftp",
 			       conn->host, lurl);
 	} else {
-		http_addheader(conn, "GET %s HTTP/1.0", lurl);
+		http_addheader(conn, "GET %s HTTP/1.1", lurl);
 		http_addheader(conn, "Host: %s", conn->host);
+		http_addheader(conn, "Connection: close");
 	}
 	if (*conn->auth)
 		http_addheader(conn, "Authorization: Basic %s", conn->auth);
